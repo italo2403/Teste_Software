@@ -1,0 +1,141 @@
+Primeiro passo é criar um projeto Java comum
+ e criar já um pacote com uma classe principal.
+
+Depois é criar um teste de unidades, no Netbeans para clicar em cima do pacote principal e ir em outros e procurar por teste de unidades "Teste JUnit"  e clicar nele
+
+Atribuir um nome a ele e será criado um pacote defalut com a classe criada. Ela deve ter importado alguns pacotes como 
+
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+
+E a classe public classe TestePoupanca(Daremos esse nome a nossa classe, já veremos o código que iremos criar e parte por parte do nosso código)
+
+O nosso pacote será:
+1- Investimento ( nele será criado a nossa classe principal Investimento.java)
+
+2- Depois é só criar um teste de unidades, no Netbeans para clicar em cima do pacote principal e ir em outros e procurar por teste de unidades "Teste JUnit"  e clicar nele
+ 
+3- Atribuir um nome a ele e será criado um pacote defalut com a classe criada. Ela deve ter importado alguns pacotes como 
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+4- E a classe public classe TestePoupanca será criado com esse nome, ficará assim :
+
+public class TestePoupanca {
+    
+    public TestePoupanca() {
+    }
+    @Test // A nossa anotação diz que estamos criando um teste           // unitário da nossa classe
+    public void testIvest() { // testamos aqui a unidade testInvest
+    Double valor =1000.00; // valor investido e que será o valor de 			         //  entrada
+    int tempo =1; //tempo de meses que ficará investido
+    Double  retorno = 1005.00; //
+    Poupanca poup = new Poupanca(valor, tempo); // criamos a classe           //que não foi criada para executar e vê o nosso teste falhar
+assertEquals(retorno, poup.simulador());   // verifica se o valor 		//retornado é igual a valor de uma variável 
+    }
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
+    }
+
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+     
+}
+ Após isso iremos executar o nosso teste e verificar que ele irá realmente falhar, nisso consiste o TDD, verificar ele falhar para assim configurar ele passando. 
+
+Para implementar a classe poupança, basta clicar em cima do sinal em vermelho ao lado e clicar em:
+"Criar class "Poupanca" com construtor "Poupanca(java.lang.Double,int)" no pacote e será criado a classe, depois disto basta segurar na classe levar ela até ao pacote principal que será criado um outro pacote default com essa classe, para isso clique em refatorar. 
+
+este é o código para fazer o código passar:
+
+Será necessário chamar o nosso método simulador que fora implementado no nosso Equals com o poup.simulador(), logo após já chamo nossas variáveis com private e refencio com o atribuito "this"
+Após isso nosso teste será aprovado sem falhar, mas falta ser implementado algumas funcionaidades. 
+
+class Poupanca {
+    private Double valor;
+    private int tempo;
+    
+    public Poupanca(Double valor, int tempo) {
+    this.valor = valor;
+    this.tempo = tempo;
+    
+    }
+    public Double simulador(){
+        return 1005.00;
+    }
+    
+    
+    }
+
+
+Agora virá o passo principal no nosso projeto que será refatorar a nossa classe Poupanca. 
+
+class Poupanca {
+    private Double valor;
+    private int tempo;
+    
+    public Poupanca(Double valor, int tempo) {
+    this.valor = valor;
+    this.tempo = tempo;
+    
+    }
+    public Double simulador(){
+	Double total = valor;
+	for(int i=0; i < tempo; i++);
+		total = total/100*0.5+total;
+
+
+        return total;
+    }
+    
+    
+    }
+ Depois vou em testPoupanca e executo o arquivo para verificar se irá passar. 
+
+Esse teste irá miseravelmente, pois comentemos um erro logo no ínicio ao não atribuir o valor 1000.00 e deixamos apenas em 100.00.
+
+Vamos analisar agora nosso retorno mudando o 1 para 3 meses e vejamos o que vai acontecer. 
+@Test
+    public void testIvest() {
+    Double valor =1000.00; //valor investido
+    int tempo =3; //tempo de meses que ficará investido
+    Double  retorno = 1005.00;
+    Poupanca poup = new Poupanca(valor, tempo);
+    assertEquals(retorno, poup.simulador());   // verifica se o valor retornado é igual a valor de uma variável 
+    }
+
+retornará um erro para nós, pois não mudamos para  1015.075125
+
+@Test
+    public void testIvest() {
+    Double valor =1000.00; //valor investido
+    int tempo =3; //tempo de meses que ficará investido
+    Double  retorno = 1015.075125;
+    Poupanca poup = new Poupanca(valor, tempo);
+    assertEquals(retorno, poup.simulador());   // verifica se o valor retornado é igual a valor de uma variável 
+    }
+Após executar a troca, nosso código irá passar tranquilamente. 
